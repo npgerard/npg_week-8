@@ -62,10 +62,14 @@ class MarkovText(object):
         # if no seed term is provided, randomly select one from the keys of the term_dict
         if seed_term is None:
             seed_term = np.random.choice(list(self.term_dict.keys()))
+        else:
+            seed_term = seed_term.lower()
+            if seed_term not in self.term_dict:
+                raise ValueError(f"Seed term '{seed_term}' not found in the corpus.")
 
         # generate starting with the seed/first random term; make sure to lower case the seed term to match the keys in the term_dict
         current_term = seed_term.lower()
-        
+
         # first item in the list is the current term
         output_terms = [current_term]
 
